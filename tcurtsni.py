@@ -10,7 +10,7 @@ st.set_page_config(page_title="Tcurtsni: You're the AI now", page_icon="🤖")
 # Sidebar for configuration
 st.sidebar.title("Configuration")
 system_prompt = st.sidebar.text_area("System Prompt", value="You are a helpful personal assistant.")
-server_url = st.sidebar.text_input("llama.cpp server base", value=os.getenv('LLAMA_API_URL',"http://127.0.0.1:8080"))
+server_url = st.sidebar.text_input("API server base", value=os.getenv('LLAMA_API_URL',"http://127.0.0.1:8080"))
 tokenizer_name = st.sidebar.text_input("Tokenizer", value="meta-llama/Meta-Llama-3-8B-Instruct")
 supress_bos = st.sidebar.checkbox('Supress BOS', value=True)
 start_button = st.sidebar.button("Start/Reset Conversation")
@@ -52,15 +52,18 @@ def inverse_chat_history(messages):
 def stream_response(prompt):
     data = {
         "prompt": prompt,
+        "model": st.session_state.model_name,
         "top_p": 0.9,
-        "n_predict": 1000,
         "stream": True
     }
+    data['max_tokens'] = 1000
+    url = server_url+'/v1/completions'
+                
     headers = {"Content-Type": "application/json"}
     completion = ''
     
     try:
-        with requests.post(server_url+'/completion', headers=headers, json=data, stream=True) as response:
+        with requests.post(url, headers=headers, json=data, stream=True) as response:
             response.raise_for_status()
             
             for line in response.iter_lines():
@@ -73,6 +76,11 @@ def stream_response(prompt):
                             yield completion
                         if 'stop' in json_data and json_data['stop']:
                             break
+                        if 'choices' in json_data:
+                            completion += json_data['choices'][0]['text']
+                            yield completion
+                            if json_data['choices'][0]['finish_reason']:
+                                break
     except requests.exceptions.RequestException as e:
         st.error(f"Error: {e}")
 

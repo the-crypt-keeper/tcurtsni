@@ -33,6 +33,8 @@ pip install -r requirements.txt
 server -m ./Meta-Llama-3-70B-Instruct.Q4_K_M.gguf -ngl 99 -c 4096 --port 8080 --host 0.0.0.0 -sm row -fa
 ```
 
+Any Open-AI compatible server that implements /v1/models and /v1/completions should work.
+
 2. Run the Streamlit app:
 
 ```
