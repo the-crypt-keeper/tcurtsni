@@ -46,7 +46,7 @@ def inverse_chat_history(messages):
     prompt = st.session_state.tokenizer.apply_chat_template(messages+[{"role": "user", "content": "<<CLIP>>"}], tokenize=False, add_generation_prompt=False, **bos_supress)
     clip_idx = prompt.find('<<CLIP>>')
     prompt = prompt[:clip_idx]
-    print(prompt)
+    # print(prompt)
     return prompt
 
 def stream_response(prompt):

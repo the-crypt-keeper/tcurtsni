@@ -1,26 +1,31 @@
 # Tcurtsni: You're the AI now
 
-Tcurtsni (Instruct spelled backwards) is a unique take on LLM Chat applications that reverses the typical User/Assistant interaction in AI chatbots. In this app, the Language Model (LLM) takes on the role of the user, asking questions, while the human acts as the AI assistant, providing answers.
+Tired of helpful assitants giving you answers?  Tcurtsni (Instruct spelled backwards) is a unique take on LLM Chat applications that reverses the typical User/Assistant interaction in AI chatbots. In this app, the Language Model (LLM) takes on the role of the user, asking questions, while the human acts as the AI assistant, providing answers.
+
+![Tcurtsni Screenshot](img/tcurtsni.png "Tcurtsni Screenshot")
+
+This project is inspired by [Magpie](https://magpie-align.github.io/index.html).
 
 ## Requirements
 
-- Python 3.7+
-- Streamlit
-- Transformers library
-- Requests library
+- Python 3.10+
+- llama.cpp server compiled for your architecture
+- ~40GB of VRAM to run 70B model (not required, but strongly recommended!)
 
 ## Installation
 
 1. Clone this repository:
-   ```
-   git clone https://github.com/yourusername/tcurtsni.git
-   cd tcurtsni
-   ```
+
+```
+git clone https://github.com/the-crypt-keeper/tcurtsni.git
+cd tcurtsni
+```
 
 2. Install the required packages:
-   ```
-   pip install -r requirements.txt
-   ```
+
+```
+pip install -r requirements.txt
+```
 
 ## Usage
 
@@ -31,16 +36,17 @@ server -m ./Meta-Llama-3-70B-Instruct.Q4_K_M.gguf -ngl 99 -c 4096 --port 8080 --
 ```
 
 2. Run the Streamlit app:
-   ```
-   streamlit run tcurtsni.py
-   ```
+
+```
+LLAMA_API_URL=http://localhost:8080 streamlit run tcurtsni.py
+```
 
 3. Open your web browser and navigate to the URL provided by Streamlit (usually `http://localhost:8501`).
 
 4. Configure the app using the sidebar:
    - Set the system prompt (optional)
-   - Enter the LLM server URL
-   - Choose the tokenizer
+   - Enter the LLM server URL (you can also use LLM_API_URL enviroment variable)
+   - Choose the tokenizer. For Llama3 models, enable the BOS supression (llama.cpp will add BOS itself)
    - Click "Start/Reset Conversation" to begin
 
 5. Interact with the AI:
@@ -60,4 +66,4 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE.md) file for details.
