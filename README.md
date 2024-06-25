@@ -1,8 +1,6 @@
-# Tcurtsni: You're the AI now
+![Tcurtsni Screenshot](img/tcurtsni.png "Tcurtsni Screenshot")
 
 Tired of helpful assitants giving you answers?  Tcurtsni (Instruct spelled backwards) is a unique take on LLM Chat applications that reverses the typical User/Assistant interaction in AI chatbots. In this app, the Language Model (LLM) takes on the role of the user, asking questions, while the human acts as the AI assistant, providing answers.
-
-![Tcurtsni Screenshot](img/tcurtsni.png "Tcurtsni Screenshot")
 
 This project is inspired by [Magpie](https://magpie-align.github.io/index.html).
 
